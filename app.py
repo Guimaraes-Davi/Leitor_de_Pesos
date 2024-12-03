@@ -70,8 +70,8 @@ def upload():
     resultado = processar_imagem(file_path)
 
     # Redimensionar a imagem para exibição
-    img = Image.open(file_path)
-    img.thumbnail((300, 300))
+    imagem = cv2.imread(imagem_caminho)
+    imagem = cv2.resize(imagem, (800, 800))
     img.save(file_path)
 
     return render_template('result.html', resultado=resultado, image_path=file.filename)
@@ -80,5 +80,6 @@ def upload():
 def uploaded_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 5000))  
+    app.run(host="0.0.0.0", port=port)
